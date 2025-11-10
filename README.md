@@ -31,7 +31,7 @@ Four families computed over multiple windows:
 - **Illiquidity (Amihud-style)**
 - **Directional impact (Kyle-style slope)**
 
-Windows used include **0–5s**, **5–20s**, **20–80s**, **80–160s**; example feature names: `breadth_5s_20s`, `amihud_rs_80s_160s`, `lambda_ols_20s_80s`.
+Windows used include **0–5s**, **5–20s**, **20–80s**, **80–160s**; example feature names: `breadth_5s_20s`, `amihud_rs_80s_160s`, `lambda_ols_20s_80s`. :contentReference[oaicite:0]{index=0}
 
 ## Practical use
 - Works with **public trade data** (no paid LOB feed).
