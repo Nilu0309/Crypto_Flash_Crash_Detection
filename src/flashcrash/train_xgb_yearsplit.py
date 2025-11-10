@@ -51,7 +51,7 @@ CAP_FEATURES_Q = None   # set to 0.99 to enable 99th percentile capping from TRA
 MODEL_DIR = Path("./models_per_asset_yearsplit")
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
-# ----- EVENT FILTERS (tighten to your definition of "flash crash") -----
+# ----- EVENT FILTERS -----
 EVENT_FILTERS = dict(
     require_role_values=["pos"],     # only keep these roles if 'role' exists; [] disables role filter
     require_has_trade=True,          # keep only has_trade==True if 'has_trade' exists
@@ -312,7 +312,7 @@ def permutation_importance_ap(bst: xgb.Booster, X: pd.DataFrame, y: np.ndarray,
     # sort desc by importance (bigger drop = more important)
     return OrderedDict(sorted(drops.items(), key=lambda kv: kv[1], reverse=True))
 
-# ===== EXTRA PLOTTING HELPERS (drop-in) =====
+# ===== EXTRA PLOTTING HELPERS =====
 def _closest_record_by_thr(records, thr):
     return min(records, key=lambda r: abs(float(r["thr"]) - float(thr)))
 
