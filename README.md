@@ -54,3 +54,51 @@ pip install -r requirements.txt
 # run pipeline (example)
 python -m flashcrash.train --config configs/default.yaml
 python -m flashcrash.evaluate --config configs/default.yaml
+
+---
+
+### Dataset Structure
+
+Each file in `features_stream_dataset/asset=*/date=*/part-*.parquet` contains precomputed feature rows sampled every **200 ms** from Binance trade data.  
+These features are derived entirely from public trade information — no order-book data is used.
+
+| Column | Description | Type |
+|---------|--------------|------|
+| `t` | UTC timestamp of each observation | datetime64[ns, UTC] |
+| `asset` | Asset symbol (e.g. BTCUSDT, ETHUSDT) | string |
+| `date` | Daily partition date | datetime64[ns, UTC] |
+| `y` | Binary label (1 = flash crash start, 0 = normal) | int |
+| `breadth_*` | Activity breadth across time windows (5–160 s) | float |
+| `volume_all_*` | Total traded volume across each window | float |
+| `large_share_*` | Count / notional of large trades | float |
+| `amihud_rs_*` | Amihud illiquidity ratio (return-to-volume) | float |
+| `lambda_ols_*` | Directional impact (Kyle’s λ proxy) | float |
+| `role`, `group_key` | Optional grouping metadata (for internal validation splits) | string |
+
+#### Example directory layout
+```
+features_stream_dataset/
+├─ asset=BTCUSDT/
+│  ├─ date=2021-01-02/part-000.parquet
+│  ├─ date=2024-01-03/part-000.parquet
+├─ asset=ETHUSDT/
+│  ├─ date=2021-01-03/part-000.parquet
+│  ├─ date=2024-01-03/part-000.parquet
+```
+
+#### Example usage
+```python
+import pandas as pd
+
+df = pd.read_parquet(
+    "features_stream_dataset/asset=BTCUSDT/date=2021-01-02/part-000.parquet"
+)
+X = df.drop(columns=["t", "asset", "date", "y", "role", "group_key"])
+y = df["y"]
+```
+
+> For privacy and file-size reasons, this repository includes **only a small demo subset**.  
+> For full experiments, provide your own full dataset under the same folder structure and update `configs/data.yaml` accordingly.
+
+---
+
