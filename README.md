@@ -55,6 +55,7 @@ pip install -r requirements.txt
 python -m flashcrash.train --config configs/default.yaml
 python -m flashcrash.evaluate --config configs/default.yaml
 
+```
 ### Dataset Structure
 
 Each file in `features_stream_dataset/asset=*/date=*/part-*.parquet` contains precomputed feature rows sampled every **200 ms** from Binance trade data.  
