@@ -1,0 +1,10 @@
+xgb_params:
+  learning_rate: 0.04
+  max_depth: 4
+  subsample: 0.9
+  colsample_bytree: 0.9
+  reg_lambda: 2.0
+  min_child_weight: 1.0
+  tree_method: hist
+  eval_metric: aucpr
+  seed: 123
