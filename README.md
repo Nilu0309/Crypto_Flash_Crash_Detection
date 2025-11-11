@@ -115,7 +115,7 @@ Features follow the dissertation’s methodology (trade-only microstructure, com
 
 - **Label** y: 1 inside **H_PRE** = 120s before each trough time, else 0 (per day/asset partition)
 
-A minimal schema table is already in this README under Dataset Structure.
+A minimal schema table is already in this README under **Dataset Structure**.
 
 ## Reproduce or Recompute Features Yourself
 
@@ -148,6 +148,7 @@ MANIFEST     = Path("./agg_download_manifest.csv")
 ```
 Events file: events_refined_with_trades.csv
 - Required columns: asset, date, t_trough_final (UTC)
+
 Manifest: agg_download_manifest.csv
 - Lists which (asset, date, role) to process. Example:
 ```
