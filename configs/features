@@ -1,0 +1,8 @@
+windows_s: [5, 20, 80, 160]
+use_families:
+  breadth: true
+  volume_all: true
+  large_share_count: true
+  large_share_notional: true
+  amihud_rs: true
+  lambda_ols: true
