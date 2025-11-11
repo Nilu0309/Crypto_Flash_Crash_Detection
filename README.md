@@ -97,7 +97,7 @@ y = df["y"]
 ```
 
 > For privacy and file-size reasons, this repository includes **only a small demo subset**.  
-> For full experiments, provide your own full dataset under the same folder structure and update `configs/data.yaml` accordingly.
+> For full experiments, you can access the dataset folder from https://drive.google.com/file/d/163oEYtCvWYIAqFXNYYvqS7z0oTKP4Z88/view?usp=drive_link.
 
 ---
 
