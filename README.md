@@ -128,7 +128,6 @@ use the script below, it’s the exact code used to build the full Google Drive 
 ### Raw aggTrades CSVs
 Downloaded from Binance data dumps or your own collector.
 Expected folder layout:
-
 ```
 data/
 └─ BINANCE/
@@ -147,13 +146,15 @@ EVENTS_CSV   = Path("./events_refined_with_trades.csv")
 MANIFEST     = Path("./agg_download_manifest.csv")  
 
 Events file: events_refined_with_trades.csv
-  Required columns: asset, date, t_trough_final (UTC)
+- Required columns: asset, date, t_trough_final (UTC)
 Manifest: agg_download_manifest.csv
-  Lists which (asset, date, role) to process. Example:
+- Lists which (asset, date, role) to process. Example:
+```
 asset,date,role
 BTCUSDT,2021-01-02,pos
 BTCUSDT,2021-01-03,quiet
 ETHUSDT,2021-01-02,near_miss
+```
 
 ## What the script does
 
