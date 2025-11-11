@@ -122,7 +122,7 @@ use the script below, it’s the exact code used to build the full Google Drive 
 ##### Script: src/step3_stream_features_parallel.py
 
 ## Inputs
-# Raw aggTrades CSVs
+### Raw aggTrades CSVs
 Downloaded from Binance data dumps or your own collector.
 Expected folder layout:
 
@@ -138,7 +138,7 @@ data/
 
 In the script, point the variable DATA_ROOT to your own copy of the folder:
 
-# Example for any operating system
+#### Example for any operating system
 DATA_ROOT    = Path("data/BINANCE")
 EVENTS_CSV   = Path("./events_refined_with_trades.csv")   
 MANIFEST     = Path("./agg_download_manifest.csv")  
@@ -180,7 +180,7 @@ Down-samples negatives per role (NEG_PER_DAY_*) to balance classes
 
 Writes partitioned parquet files under
 ```
-  -features_stream_dataset/asset=.../date=.../part-*.parquet
+  - features_stream_dataset/asset=.../date=.../part-*.parquet
 ```
 
 ---
