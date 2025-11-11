@@ -74,7 +74,7 @@ These features are derived entirely from public trade information; no order-book
 | `lambda_ols_*` | Directional impact (Kyle’s λ proxy) | float |
 | `role`, `group_key` | Optional grouping metadata (for internal validation splits) | string |
 
-#### Example directory layout
+### Example directory layout
 ```
 features_stream_dataset/
 ├─ asset=BTCUSDT/
@@ -85,7 +85,7 @@ features_stream_dataset/
 │  ├─ date=2024-01-03/part-000.parquet
 ```
 
-#### Example usage
+### Example usage
 ```python
 import pandas as pd
 
@@ -97,7 +97,100 @@ y = df["y"]
 ```
 
 > For privacy and file-size reasons, this repository includes **only a small demo subset**.  
-> For full experiments, you can access the dataset folder from [https://drive.google.com/file/d/163oEYtCvWYIAqFXNYYvqS7z0oTKP4Z88/view?usp=drive_link.](https://drive.google.com/drive/folders/13ZIgfITOsCKLRhIe6G8Sk5_6aIZC2ffz?usp=drive_link)
+> For the full, ready-to-use feature dataset (2021–2024), download from Google Drive: [https://drive.google.com/file/d/163oEYtCvWYIAqFXNYYvqS7z0oTKP4Z88/view?usp=drive_link.](https://drive.google.com/drive/folders/13ZIgfITOsCKLRhIe6G8Sk5_6aIZC2ffz?usp=drive_link)
+
+## Layout (partitioned Parquet):
+```
+features_stream_dataset/
+└─ asset=BTCUSDT/date=YYYY-MM-DD/part-*.parquet
+└─ asset=ETHUSDT/date=YYYY-MM-DD/part-*.parquet
+```
+### How the Features Are Computed (method)
+
+Features follow the dissertation’s methodology (trade-only microstructure, computed over rings of (0,5], (5,20], (20,80], (80,160] seconds):
+
+Breadth / activity: breadth_* (trade count per ring)
+
+Volume: volume_all_* (total traded size)
+
+Large trade concentration: large_share_count_*, large_share_notional_*
+
+“Large” is defined causally: rolling 1-sec notional q=97.5% threshold, past-only as-of join
+
+Illiquidity (Amihud): amihud_rs_* = |returns| / dollar notional
+
+Directional impact (Kyle’s λ proxy): lambda_ols_* = cov(r, flow) / var(flow) in each ring
+
+Label y: 1 inside H_PRE = 120s before each trough time, else 0 (per day/asset partition)
+
+A minimal schema table is already in this README under Dataset Structure.
+
+### Reproduce or Recompute Features Yourself
+
+If you want to generate the feature dataset locally from raw Binance aggTrades CSVs,
+use the script below, it’s the exact code used to build the full Google Drive dataset.
+
+# Script: src/step3_stream_features_parallel.py
+
+## Inputs
+# Raw aggTrades CSVs
+Downloaded from Binance data dumps or your own collector.
+Expected folder layout:
+
+```
+data/
+└─ BINANCE/
+   └─ aggTrades/
+      ├─ BTCUSDT/BTCUSDT-aggTrades-2021-01-02.csv
+      ├─ BTCUSDT/BTCUSDT-aggTrades-2021-01-03.csv
+      ├─ ETHUSDT/ETHUSDT-aggTrades-2021-01-02.csv
+      └─ ETHUSDT/ETHUSDT-aggTrades-2021-01-03.csv
+```
+
+In the script, point the variable DATA_ROOT to your own copy of the folder:
+
+# Example for any operating system
+DATA_ROOT    = Path("data/BINANCE")
+EVENTS_CSV   = Path("./events_refined_with_trades.csv")   
+MANIFEST     = Path("./agg_download_manifest.csv")  
+
+Events file: events_refined_with_trades.csv
+  Required columns: asset, date, t_trough_final (UTC)
+Manifest: agg_download_manifest.csv
+  Lists which (asset, date, role) to process. Example:
+asset,date,role
+BTCUSDT,2021-01-02,pos
+BTCUSDT,2021-01-03,quiet
+ETHUSDT,2021-01-02,near_miss
+
+### What the script does
+
+Loads daily Binance trade data with fast parquet caching (_cache_parquet/)
+
+Applies Lee–Ready direction rule + tie-break with isBuyerMaker
+
+Computes causal large-trade thresholds (rolling 1 s notional, past-only)
+
+Bucketizes trades into 200 ms intervals
+
+Builds ring-window features over (0, 5], (5, 20], (20, 80], (80, 160] seconds:
+
+  breadth_* – trade count per window
+  
+  volume_all_* – total volume
+  
+  large_share_* – large-trade concentration
+  
+  amihud_rs_* – Amihud illiquidity ratio
+  
+  lambda_ols_* – directional impact (Kyle’s λ proxy)
+
+Labels positives in a 120 s pre-trough window (H_PRE = 120s)
+
+Down-samples negatives per role (NEG_PER_DAY_*) to balance classes
+
+Writes partitioned parquet files under
+features_stream_dataset/asset=.../date=.../part-*.parquet
 
 ---
 
