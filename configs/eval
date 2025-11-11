@@ -1,0 +1,8 @@
+plots:
+  pr_curve: true
+  roc_curve: true
+  threshold_scan: true
+  fa_boxplot: true
+  leadtime_hist: true
+  importances_gain: true
+  importances_perm: true
