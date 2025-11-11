@@ -1,0 +1,4 @@
+features_parquet: ./features_stream_dataset
+feature_cols_json: ./configs/feature_cols.json   
+events_csv: ./events_refined_with_trades.csv
+assets: ["BTCUSDT", "ETHUSDT"]
