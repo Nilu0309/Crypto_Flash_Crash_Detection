@@ -142,6 +142,7 @@ In the script, point the variable DATA_ROOT to your own copy of the folder:
 
 #### Example for any operating system
 DATA_ROOT    = Path("data/BINANCE")
+
 EVENTS_CSV   = Path("./events_refined_with_trades.csv")   
 MANIFEST     = Path("./agg_download_manifest.csv")  
 
@@ -158,15 +159,15 @@ ETHUSDT,2021-01-02,near_miss
 
 ## What the script does
 
-Loads daily Binance trade data with fast parquet caching (_cache_parquet/)
+- Loads daily Binance trade data with fast parquet caching (_cache_parquet/)
 
-Applies Lee–Ready direction rule + tie-break with isBuyerMaker
+- Applies Lee–Ready direction rule + tie-break with isBuyerMaker
 
-Computes causal large-trade thresholds (rolling 1 s notional, past-only)
+- Computes causal large-trade thresholds (rolling 1 s notional, past-only)
 
-Bucketizes trades into 200 ms intervals
+- Bucketizes trades into 200 ms intervals
 
-Builds ring-window features over (0, 5], (5, 20], (20, 80], (80, 160] seconds:
+- Builds ring-window features over (0, 5], (5, 20], (20, 80], (80, 160] seconds:
 
   - **breadth_*** – trade count per window
     
@@ -178,11 +179,11 @@ Builds ring-window features over (0, 5], (5, 20], (20, 80], (80, 160] seconds:
     
   - **lambda_ols_*** – directional impact (Kyle’s λ proxy)
 
-Labels positives in a 120 s pre-trough window (H_PRE = 120s)
+- Labels positives in a 120 s pre-trough window (H_PRE = 120s)
 
-Down-samples negatives per role (NEG_PER_DAY_*) to balance classes
+- Down-samples negatives per role (NEG_PER_DAY_*) to balance classes
 
-Writes partitioned parquet files under
+- Writes partitioned parquet files under
 ```
 features_stream_dataset/asset=.../date=.../part-*.parquet
 ```
