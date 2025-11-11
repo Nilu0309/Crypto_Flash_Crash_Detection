@@ -46,6 +46,7 @@ Windows used include **0–5s**, **5–20s**, **20–80s**, **80–160s**; examp
 - Predictive, not causal.
 
 ## Getting started
+
 ```bash
 # create env
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
@@ -75,6 +76,7 @@ These features are derived entirely from public trade information; no order-book
 | `role`, `group_key` | Optional grouping metadata (for internal validation splits) | string |
 
 ## Example directory layout
+
 ```
 features_stream_dataset/
 ├─ asset=BTCUSDT/
@@ -89,6 +91,7 @@ features_stream_dataset/
 > For the full, ready-to-use feature dataset (2021–2024), download from Google Drive: [https://drive.google.com/file/d/163oEYtCvWYIAqFXNYYvqS7z0oTKP4Z88/view?usp=drive_link.](https://drive.google.com/drive/folders/13ZIgfITOsCKLRhIe6G8Sk5_6aIZC2ffz?usp=drive_link)
 
 ## Layout (partitioned Parquet):
+
 ```
 features_stream_dataset/
 └─ asset=BTCUSDT/date=YYYY-MM-DD/part-*.parquet
@@ -152,7 +155,7 @@ BTCUSDT,2021-01-02,pos
 BTCUSDT,2021-01-03,quiet
 ETHUSDT,2021-01-02,near_miss
 
-### What the script does
+## What the script does
 
 Loads daily Binance trade data with fast parquet caching (_cache_parquet/)
 
@@ -180,7 +183,7 @@ Down-samples negatives per role (NEG_PER_DAY_*) to balance classes
 
 Writes partitioned parquet files under
 ```
-  - features_stream_dataset/asset=.../date=.../part-*.parquet
+features_stream_dataset/asset=.../date=.../part-*.parquet
 ```
 
 ---
