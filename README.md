@@ -104,7 +104,7 @@ Features follow the dissertation’s methodology (trade-only microstructure, com
 
 - **Large trade concentration:** large_share_count_*, large_share_notional_*
 
--- **“Large” is defined causally:** rolling 1-sec notional q=97.5% threshold, past-only as-of join
+  - **“Large” is defined causally:** rolling 1-sec notional q=97.5% threshold, past-only as-of join
 
 - **Illiquidity (Amihud):** amihud_rs_* = |returns| / dollar notional
 
@@ -164,22 +164,24 @@ Bucketizes trades into 200 ms intervals
 
 Builds ring-window features over (0, 5], (5, 20], (20, 80], (80, 160] seconds:
 
-  breadth_* – trade count per window
-  
-  volume_all_* – total volume
-  
-  large_share_* – large-trade concentration
-  
-  amihud_rs_* – Amihud illiquidity ratio
-  
-  lambda_ols_* – directional impact (Kyle’s λ proxy)
+  - **breadth_*** – trade count per window
+    
+  - **volume_all_*** – total volume
+    
+  - **large_share_*** – large-trade concentration
+    
+  - **amihud_rs_*** – Amihud illiquidity ratio
+    
+  - **lambda_ols_*** – directional impact (Kyle’s λ proxy)
 
 Labels positives in a 120 s pre-trough window (H_PRE = 120s)
 
 Down-samples negatives per role (NEG_PER_DAY_*) to balance classes
 
 Writes partitioned parquet files under
-features_stream_dataset/asset=.../date=.../part-*.parquet
+```
+  -features_stream_dataset/asset=.../date=.../part-*.parquet
+```
 
 ---
 
