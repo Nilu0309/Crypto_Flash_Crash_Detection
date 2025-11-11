@@ -56,7 +56,7 @@ python -m flashcrash.train --config configs/default.yaml
 python -m flashcrash.evaluate --config configs/default.yaml
 
 ```
-### Dataset Structure
+## Dataset Structure
 
 Each file in `features_stream_dataset/asset=*/date=*/part-*.parquet` contains precomputed feature rows sampled every **200 ms** from Binance trade data.  
 These features are derived entirely from public trade information; no order-book data is used.
@@ -74,7 +74,7 @@ These features are derived entirely from public trade information; no order-book
 | `lambda_ols_*` | Directional impact (Kyle’s λ proxy) | float |
 | `role`, `group_key` | Optional grouping metadata (for internal validation splits) | string |
 
-### Example directory layout
+## Example directory layout
 ```
 features_stream_dataset/
 ├─ asset=BTCUSDT/
@@ -83,17 +83,6 @@ features_stream_dataset/
 ├─ asset=ETHUSDT/
 │  ├─ date=2021-01-03/part-000.parquet
 │  ├─ date=2024-01-03/part-000.parquet
-```
-
-### Example usage
-```python
-import pandas as pd
-
-df = pd.read_parquet(
-    "features_stream_dataset/asset=BTCUSDT/date=2021-01-02/part-000.parquet"
-)
-X = df.drop(columns=["t", "asset", "date", "y", "role", "group_key"])
-y = df["y"]
 ```
 
 > For privacy and file-size reasons, this repository includes **only a small demo subset**.  
@@ -105,32 +94,32 @@ features_stream_dataset/
 └─ asset=BTCUSDT/date=YYYY-MM-DD/part-*.parquet
 └─ asset=ETHUSDT/date=YYYY-MM-DD/part-*.parquet
 ```
-### How the Features Are Computed (method)
+## How the Features Are Computed (method)
 
 Features follow the dissertation’s methodology (trade-only microstructure, computed over rings of (0,5], (5,20], (20,80], (80,160] seconds):
 
-Breadth / activity: breadth_* (trade count per ring)
+- **Breadth / activity:** breadth_* (trade count per ring)
 
-Volume: volume_all_* (total traded size)
+- **Volume:** volume_all_* (total traded size)
 
-Large trade concentration: large_share_count_*, large_share_notional_*
+- **Large trade concentration:** large_share_count_*, large_share_notional_*
 
-“Large” is defined causally: rolling 1-sec notional q=97.5% threshold, past-only as-of join
+-- **“Large” is defined causally:** rolling 1-sec notional q=97.5% threshold, past-only as-of join
 
-Illiquidity (Amihud): amihud_rs_* = |returns| / dollar notional
+- **Illiquidity (Amihud):** amihud_rs_* = |returns| / dollar notional
 
-Directional impact (Kyle’s λ proxy): lambda_ols_* = cov(r, flow) / var(flow) in each ring
+- **Directional impact (Kyle’s λ proxy):** lambda_ols_* = cov(r, flow) / var(flow) in each ring
 
-Label y: 1 inside H_PRE = 120s before each trough time, else 0 (per day/asset partition)
+- **Label y:** 1 inside H_PRE = 120s before each trough time, else 0 (per day/asset partition)
 
 A minimal schema table is already in this README under Dataset Structure.
 
-### Reproduce or Recompute Features Yourself
+## Reproduce or Recompute Features Yourself
 
 If you want to generate the feature dataset locally from raw Binance aggTrades CSVs,
 use the script below, it’s the exact code used to build the full Google Drive dataset.
 
-# Script: src/step3_stream_features_parallel.py
+##### Script: src/step3_stream_features_parallel.py
 
 ## Inputs
 # Raw aggTrades CSVs
