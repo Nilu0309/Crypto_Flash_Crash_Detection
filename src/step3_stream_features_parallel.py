@@ -1,4 +1,3 @@
-# step3_stream_features_parallel.py
 # Fast, causal stream features + labels (parallel, cached)
 # -------------------------------------------------------
 
@@ -456,3 +455,4 @@ if __name__ == "__main__":
     import multiprocessing as mp
     mp.freeze_support()
     main()
+
