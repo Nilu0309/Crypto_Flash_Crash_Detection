@@ -101,19 +101,19 @@ features_stream_dataset/
 
 Features follow the dissertation’s methodology (trade-only microstructure, computed over rings of (0,5], (5,20], (20,80], (80,160] seconds):
 
-- **Breadth / activity:** breadth_* (trade count per ring)
+- **Breadth / activity:** `breadth_*` (trade count per ring)
 
-- **Volume:** volume_all_* (total traded size)
+- **Volume:** `volume_all_*` (total traded size)
 
-- **Large trade concentration:** large_share_count_* , large_share_notional_*
+- **Large trade concentration:** `large_share_count_*` , `large_share_notional_*`
 
   - **“Large” is defined causally:** rolling 1-sec notional q=97.5% threshold, past-only as-of join
 
-- **Illiquidity (Amihud):** amihud_rs_* = |returns| / dollar notional
+- **Illiquidity (Amihud):** `amihud_rs_*` = |returns| / dollar notional
 
-- **Directional impact (Kyle’s λ proxy):** lambda_ols_* = cov(r, flow) / var(flow) in each ring
+- **Directional impact (Kyle’s λ proxy):** `lambda_ols_*` = cov(r, flow) / var(flow) in each ring
 
-- **Label** y: 1 inside **H_PRE** = 120s before each trough time, else 0 (per day/asset partition)
+- **Label** `y`: 1 inside **H_PRE** = 120s before each trough time, else 0 (per day/asset partition)
 
 A minimal schema table is already in this README under **Dataset Structure**.
 
