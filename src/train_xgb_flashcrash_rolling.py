@@ -1,4 +1,3 @@
-# train_xgb_flashcrash_rolling.py
 # Robust XGBoost training for flash-crash detection with:
 # - Year split: TRAIN=2021, VALID=2022, TEST>=2023
 # - Strict pre-trough evaluation window (no last-second credit)
@@ -1069,7 +1068,7 @@ for asset in ASSETS:
         print(f"  {yy}: PR-AUC={ap_sub:.4f}, ROC-AUC={roc_sub:.4f}, "
               f"det={em_sub['event_detection_rate']:.3f}, lead_med={em_sub['lead_median_s']:.1f}s, events={em_sub['events_evaluated']}")
 
-    # Save model + metadata
+    # Save model and metadata
     mpath = MODEL_DIR / f"xgb_flashcrash_yearsplit_{asset}.json"
     final_bst.save_model(mpath)
     meta = dict(
@@ -1110,4 +1109,5 @@ for asset in ASSETS:
     (MODEL_DIR / f"metadata_yearsplit_{asset}.json").write_text(json.dumps(meta, indent=2, default=str))
 
 print("\nDone.")
+
 
