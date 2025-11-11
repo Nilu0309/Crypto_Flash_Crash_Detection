@@ -141,11 +141,11 @@ data/
 In the script, point the variable DATA_ROOT to your own copy of the folder:
 
 #### Example for any operating system
-
+```
 DATA_ROOT    = Path("data/BINANCE")
 EVENTS_CSV   = Path("./events_refined_with_trades.csv")   
 MANIFEST     = Path("./agg_download_manifest.csv")  
-
+```
 Events file: events_refined_with_trades.csv
 - Required columns: asset, date, t_trough_final (UTC)
 Manifest: agg_download_manifest.csv
