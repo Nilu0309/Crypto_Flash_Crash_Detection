@@ -1,0 +1,6 @@
+target_fa_per_day: 0.20       # calibrate threshold on VALID to this
+k_of_n: [2, 20]               # confirmations within N buckets
+h_pre_sec: 120                # pre-trough window
+exclude_last_s: 30            # exclude last seconds before trough
+merge_sec: 5                  # merge nearby alerts
+cooldown_sec: 20              # suppress bursts
