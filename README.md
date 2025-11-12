@@ -24,6 +24,13 @@ A supervised machine learning pipeline that predicts cryptocurrency **flash cras
 A rapid price drop of **3.5–5.0%** over **5–30 minutes**, followed by **≥60% recovery within 60 minutes**.  
 Detection is evaluated strictly **pre-trough**, with valid alerts in [t*−120s, t*−30s).
 
+Below are sample plots of detected flash-crash events:
+
+| BTCUSDT | ETHUSDT |
+|----------|----------|
+| ![BTC flash crash](plots_flash_crash/BTCUSDT_strict/BTCUSDT_2021-01-04.png) | ![ETH flash crash](plots_flash_crash/ETHUSDT_strict/ETHUSDT_2021-01-07.png) |
+| ![BTC flash crash](plots_flash_crash/BTCUSDT_strict/BTCUSDT_2021-05-19.png) | ![ETH flash crash](plots_flash_crash/ETHUSDT_strict/ETHUSDT_2021-05-19.png) |
+
 ## Features (trades-only)
 Four families computed over multiple windows:
 - **Activity / Breadth & Volume**
