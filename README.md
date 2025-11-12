@@ -45,18 +45,6 @@ Windows used include **0–5s**, **5–20s**, **20–80s**, **80–160s**; examp
 - **Trade-only** proxies (no bid–ask/depth) limit microstructure visibility.
 - Predictive, not causal.
 
-## Getting started
-
-```bash
-# create env
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-
-# run pipeline (example)
-python -m flashcrash.train --config configs/default.yaml
-python -m flashcrash.evaluate --config configs/default.yaml
-
-```
 ## Dataset Structure
 
 Each file in `features_stream_dataset/asset=*/date=*/part-*.parquet` contains precomputed feature rows sampled every **200 ms** from Binance trade data.  
