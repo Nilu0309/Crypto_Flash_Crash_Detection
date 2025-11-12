@@ -21,8 +21,8 @@ A supervised machine learning pipeline that predicts cryptocurrency **flash cras
 - Detection requires a **coverage vs. noise** trade-off; you can’t have both perfect detection and total silence.
 
 ## Flash crash definition (labeling)
-A rapid price drop of **3.5–5.0%** over **5–30 minutes**, followed by **≥60% recovery within 60 minutes**.  
-Detection is evaluated strictly **pre-trough**, with valid alerts in [t*−120s, t*−30s).
+A rapid price drop of at least **3.5–5.0%** within **5–30 minutes**, followed by **≥60% recovery within 60 minutes**.  
+Detection is evaluated strictly **pre-trough**, with valid alerts in [t* −120s, t* −30s).
 
 Below are sample plots of detected flash-crash events:
 
